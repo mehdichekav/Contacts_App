@@ -4,6 +4,7 @@ import inputs from "../contacts/inputs";
 import { v4 } from "uuid";
 import styles from "./Contacts.module.css";
 import Search from "./Search";
+import Modal from "./Modal";
 
 function Contacts() {
   const [contacts, setContacts] = useState([]);
@@ -11,6 +12,10 @@ function Contacts() {
   const [alertType, setAlertType] = useState("");
   const [search, setSearch] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedContacts, setSelectedContacts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [deleteType, setDeleteType] = useState(""); // single یا bulk
+  const [deleteId, setDeleteId] = useState(null);
   const [contact, setContact] = useState({
     id: "",
     name: "",
@@ -94,6 +99,45 @@ function Contacts() {
             event.email.toLowerCase().includes(search) ||
             event.phone.toLowerCase().includes(search)
         );
+
+  const handleSelect = (id, isChecked) => {
+    if (isChecked) {
+      setSelectedContacts((prev) => [...prev, id]);
+    } else {
+      setSelectedContacts((prev) =>
+        prev.filter((contactId) => contactId !== id)
+      );
+    }
+  };
+
+
+  const confirmDeleteSingle = (id) => {
+    setDeleteId(id);
+    setDeleteType("single");
+    setShowModal(true);
+  };
+
+  const confirmBulkDelete = () => {
+    setDeleteType("bulk");
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteType === "single") {
+      setContacts((prev) => prev.filter((c) => c.id !== deleteId));
+    } else if (deleteType === "bulk") {
+      setContacts((prev) =>
+        prev.filter((c) => !selectedContacts.includes(c.id))
+      );
+      setSelectedContacts([]);
+    }
+    setShowModal(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.form}>
@@ -106,15 +150,35 @@ function Contacts() {
             value={contact[input.name]}
             onChange={changeHandler}
           />
-          
         ))}
-       
+
         {isEditing ? (
           <button onClick={updateHandler}>Update Contact</button>
         ) : (
           <button onClick={addHandler}>Add Contact</button>
         )}
       </div>
+
+      <button
+        className={`${styles.deleted} ${
+          selectedContacts.length > 0 ? styles.show : styles.hidden
+        }`}
+        onClick={confirmBulkDelete}
+        disabled={selectedContacts.length === 0}
+      >
+        Delete Selected ({selectedContacts.length})
+      </button>
+      {showModal && (
+        <Modal
+          message={
+            deleteType === "bulk"
+              ? "Are you sure you want to delete selected contacts?"
+              : "Are you sure you want to delete this contact?"
+          }
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
       <div
         className={`${styles.alert} ${
           alertType === "success"
@@ -132,6 +196,8 @@ function Contacts() {
         contacts={filteredContacts}
         deleteHandler={deleteHandler}
         editHandler={editHandler}
+        handleSelect={handleSelect}
+        confirmDeleteSingle={confirmDeleteSingle}
       />
     </div>
   );

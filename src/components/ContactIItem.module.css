@@ -9,6 +9,12 @@
     border-radius: 10px;
 }
 
+.item:hover {
+    background-color: rgb(226, 209, 190);
+    transform: scale(1.02);
+
+}
+
 .item p {
     flex-basis: 0;
     flex-grow: 1;
@@ -39,3 +45,13 @@
 .item button:hover {
     font-size: 1.5rem;
 }
+
+.item input {
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: none;
+    margin-left: 10px;
+    transition: .1s all ease-in-out;
+}
+

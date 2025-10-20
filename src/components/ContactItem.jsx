@@ -1,21 +1,31 @@
-import styles from "./ContactIItem.module.css"
-function ContactItem({data : {id, name, lastName, email, phone}, deleteHandler, editHandler}) {
+import styles from "./ContactIItem.module.css";
+function ContactItem({
+  data: { id, name, lastName, email, phone },
+  deleteHandler,
+  editHandler,
+  handleSelect
+}) {
   return (
-       <li className={styles.item}>
-              <p>
-                {name} {lastName}
-              </p>
-              <p>
-                <span>📬</span> {email}
-              </p>
-              <p>
-                <span>📞</span> {phone}
-              </p>
-              <button onClick={() => editHandler(id)}>✏️</button>
-              <button onClick={() => deleteHandler(id)}>🗑️</button>
-               <input type="checkbox"  />
-            </li>
-  )
+    <li className={styles.item}>
+      
+      <p>
+        {name} {lastName}
+      </p>
+      <p>
+        <span>📬</span> {email}
+      </p>
+      <p>
+        <span>📞</span> {phone}
+      </p>
+      <button onClick={() => editHandler(id)}>✏️</button>
+      <button onClick={() => deleteHandler(id)}>🗑️</button>
+      {/* <button onClick={() => confirmDeleteSingle(data.id)}>Delete</button> */}
+        <input
+        type="checkbox"
+        onChange={(e) => handleSelect(id, e.target.checked)}
+      />
+    </li>
+  );
 }
 
-export default ContactItem
+export default ContactItem;
