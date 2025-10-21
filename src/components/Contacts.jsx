@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactsList from "./ContactsList";
 import inputs from "../contacts/inputs";
 import { v4 } from "uuid";
@@ -7,7 +7,10 @@ import Search from "./Search";
 import Modal from "./Modal";
 
 function Contacts() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] =  useState(() => {
+  const saved = localStorage.getItem("contacts");
+  return saved ? JSON.parse(saved) : [];
+});
   const [alert, setAlert] = useState([]);
   const [alertType, setAlertType] = useState("");
   const [search, setSearch] = useState("");
@@ -24,6 +27,11 @@ function Contacts() {
     phone: "",
   });
 
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
+  
   const changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
