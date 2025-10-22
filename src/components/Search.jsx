@@ -1,15 +1,17 @@
-// import { IoSearchSharp } from "react-icons/io5";
+import { Search as SearchIcon } from "lucide-react";
 import styles from "./Search.module.css"
 
 
 function Search({ search,setSearch, searchHandler }) {
   return (
-    <div className={styles.container}>
-     <input
+     <div className={styles.searchContainer}>
+      <SearchIcon className={styles.icon} />
+      <input
         type="text"
-        placeholder="Search..."
         value={search}
         onChange={(e) => setSearch(e.target.value.toLowerCase())}
+        placeholder="Search contacts..."
+        className={styles.input}
       />
     </div>
   );

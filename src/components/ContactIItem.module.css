@@ -10,7 +10,7 @@
 }
 
 .item:hover {
-    background-color: rgb(226, 209, 190);
+    background-color: rgb(196, 194, 191);
     transform: scale(1.02);
 
 }

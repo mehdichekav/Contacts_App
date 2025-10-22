@@ -1,56 +1,58 @@
-.backdrop {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 10;
-  animation: fadeIn 0.3s ease;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  z-index: 1000;
 }
 
 .modal {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  width: 300px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  animation: slideDown 0.3s ease;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 320px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: fadeIn 0.3s ease;
 }
 
 .actions {
   display: flex;
-  justify-content: space-around;
-  margin-top: 1.5rem;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .confirm {
-  background-color: #2e7d32;
+  background: #ef4444;
   color: white;
-  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 10px 20px;
   cursor: pointer;
 }
 
 .cancel {
-  background-color: #c62828;
-  color: white;
-  padding: 0.5rem 1rem;
+  background: #e5e7eb;
+  color: #111827;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 10px 20px;
   cursor: pointer;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

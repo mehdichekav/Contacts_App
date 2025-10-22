@@ -4,12 +4,12 @@
 }
 
 .container h1 {
-    color: #304ff2;
+    color: #1a3dec;
     margin-bottom: 20px;
 }
 
 .container p {
-    color: grey;
+    color: rgb(0, 0, 0);
 }
 
 .container a {
@@ -25,3 +25,4 @@
     color: #bbdefb;
     background-color: #304ff2;
 }
+

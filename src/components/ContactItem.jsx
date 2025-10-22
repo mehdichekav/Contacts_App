@@ -19,7 +19,6 @@ function ContactItem({
       </p>
       <button onClick={() => editHandler(id)}>✏️</button>
       <button onClick={() => deleteHandler(id)}>🗑️</button>
-      {/* <button onClick={() => confirmDeleteSingle(data.id)}>Delete</button> */}
         <input
         type="checkbox"
         onChange={(e) => handleSelect(id, e.target.checked)}

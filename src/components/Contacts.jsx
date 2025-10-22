@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
-import ContactsList from "./ContactsList";
-import inputs from "../contacts/inputs";
+
 import { v4 } from "uuid";
+
+import inputs from "../contacts/inputs";
+
+import ContactsList from "./ContactsList";
 import styles from "./Contacts.module.css";
 import Search from "./Search";
 import Modal from "./Modal";
+import ContactForm from "./ContactForm";
+
 
 function Contacts() {
-  const [contacts, setContacts] =  useState(() => {
-  const saved = localStorage.getItem("contacts");
-  return saved ? JSON.parse(saved) : [];
-});
+  const [contacts, setContacts] = useState(() => {
+    const saved = localStorage.getItem("contacts");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [alert, setAlert] = useState([]);
   const [alertType, setAlertType] = useState("");
   const [search, setSearch] = useState("");
@@ -31,7 +36,6 @@ function Contacts() {
     localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
-  
   const changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -118,7 +122,6 @@ function Contacts() {
     }
   };
 
-
   const confirmDeleteSingle = (id) => {
     setDeleteId(id);
     setDeleteType("single");
@@ -148,34 +151,16 @@ function Contacts() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.form}>
-        {inputs.map((input, index) => (
-          <input
-            key={index}
-            type={input.type}
-            placeholder={input.placeholder}
-            name={input.name}
-            value={contact[input.name]}
-            onChange={changeHandler}
-          />
-        ))}
-
-        {isEditing ? (
-          <button onClick={updateHandler}>Update Contact</button>
-        ) : (
-          <button onClick={addHandler}>Add Contact</button>
-        )}
-      </div>
-
-      <button
-        className={`${styles.deleted} ${
-          selectedContacts.length > 0 ? styles.show : styles.hidden
-        }`}
-        onClick={confirmBulkDelete}
-        disabled={selectedContacts.length === 0}
-      >
-        Delete Selected ({selectedContacts.length})
-      </button>
+      <ContactForm
+        inputs={inputs}
+        contact={contact}
+        changeHandler={changeHandler}
+        isEditing={isEditing}
+        addHandler={addHandler}
+        updateHandler={updateHandler}
+        selectedContacts={selectedContacts}
+        confirmBulkDelete={confirmBulkDelete}
+      />
       {showModal && (
         <Modal
           message={

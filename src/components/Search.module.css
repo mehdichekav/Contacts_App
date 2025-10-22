@@ -1,20 +1,60 @@
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #001aff;
-    color: #6b6b6f;
-    padding: 10px 20px;
-    margin: 15px;
-    border-radius: 10px;
+.searchContainer {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 1.5rem auto;
+  transition: all 0.3s ease;
 }
 
-.container input {
-    width: 850px;
-    height: 35px;
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    transition: .1s all ease-in-out;
+.icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+.input:focus + .icon {
+  color: #007bff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .input {
+    background-color: #1f1f1f;
+    border-color: #333;
+    color: #eee;
+  }
+
+  .input:focus {
+    border-color: #3399ff;
+    box-shadow: 0 0 10px rgba(51, 153, 255, 0.3);
+  }
+
+  .icon {
+    color: #bbb;
+  }
+
+  .input:focus + .icon {
+    color: #3399ff;
+  }
 }
