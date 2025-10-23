@@ -1,52 +1,62 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
 }
 
 .form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    color: #111;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 20px;
-   
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  color: #111;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+.form input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
 }
 
 .form input {
-    width: 45%;
-    margin: 10px;
-    height: 40px;
-    padding: 10px;
-    border: 2px solid #eaeaea;
-    border-radius: 10px;
-    color: #304ffe;
-    font-size: 1rem;
+  width: 45%;
+  margin: 10px;
+  height: 40px;
+  padding: 10px;
+  border: 2px solid #eaeaea;
+  border-radius: 10px;
+  color: #304ffe;
+  font-size: 1rem;
 }
 
 .form button {
-    width: calc(90% + 20px);
-    height: 40px;
-    padding:  0.6rem 1.2rem;
-    margin: 10px 0;
-    cursor: pointer;
-    background-color: #304ffe;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    color: #fff;
-    transition: .3s all ease-in-out;
+  width: calc(90% + 20px);
+  height: 40px;
+  padding:  0.6rem 1.2rem;
+  margin: 10px 0;
+  cursor: pointer;
+  background-color: #304ffe;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #fff;
+  transition: .3s all ease-in-out;
 }
 
 .form button:hover{
-    background-color: #0056b3;
-    box-shadow: #0c2ad487 0px 7px 29px 0px;
+  background-color: #0056b3;
+  box-shadow: #0c2ad487 0px 7px 29px 0px;
 }
 
 .deleted {
@@ -80,30 +90,34 @@
   cursor: not-allowed;
 }
 
-
 .alert {
-    text-align: center;
-    width: 100%;
-    height: 40px;
-    margin: 5px 0 25px;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    border-radius: 10px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
 }
 
 .success {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #81c784;
+  background-color: #d1e7dd;
+  color: #0f5132;
 }
 
 .error {
-    background-color: #ffebee;
-    color: #c62828;
-    border: 1px solid #ef5350;
+  background-color: #f8d7da;
+  color: #842029;
 }
+
+.alert p {
+  margin: 0;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 @media (max-width : 500px) {
     .form input {
@@ -115,51 +129,32 @@
 }
 
 .listContainer {
-    min-height: 300px; 
-    max-height: 300px; 
-    overflow-y: auto;  
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 1rem;
-    margin-top: 1rem;
-    background-color: #fafafa;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  min-height: 300px; 
+  max-height: 300px; 
+  overflow-y: auto;  
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .contactItem {
-    background: white;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
 .contactItem:hover {
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
-.noResult {
-    text-align: center;
-    color: #666;
-    font-size: 0.9rem;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-
-.dark {
-  background: #111827;
-  color: #f9fafb;
-  transition: all 0.3s ease;
-}
-.dark-mode {
-  background-color: #111827;  
-  color: #f9fafb;  
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
 
 
 button, input, .alert, .deleted {
@@ -188,11 +183,6 @@ button, input, .alert, .deleted {
 .themeToggle:hover {
   transform: scale(1.05);
   opacity: 0.9;
-}
-
-body.dark-mode .form button {
-  background-color: #007bff !important;
-  color: #fff !important;
 }
 
 

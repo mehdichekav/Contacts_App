@@ -22,7 +22,7 @@ function Contacts() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [deleteType, setDeleteType] = useState(""); // single یا bulk
+  const [deleteType, setDeleteType] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [contact, setContact] = useState({
     id: "",

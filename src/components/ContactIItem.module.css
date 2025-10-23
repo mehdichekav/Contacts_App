@@ -7,12 +7,15 @@
     padding: 10px 20px;
     margin: 15px;
     border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .item:hover {
-    background-color: rgb(196, 194, 191);
-    transform: scale(1.02);
-
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    background-color: #f9fafb;
 }
 
 .item p {
