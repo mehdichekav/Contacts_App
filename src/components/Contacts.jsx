@@ -10,7 +10,6 @@ import Search from "./Search";
 import Modal from "./Modal";
 import ContactForm from "./ContactForm";
 
-
 function Contacts() {
   const [contacts, setContacts] = useState(() => {
     const saved = localStorage.getItem("contacts");
@@ -66,6 +65,12 @@ function Contacts() {
       email: "",
       phone: "",
     });
+    setAlert("Contact added successfully!");
+    setAlertType("success");
+    setTimeout(() => {
+      setAlert("");
+      setAlertType("");
+    }, 2000);
   };
 
   const deleteHandler = (id) => {
@@ -75,8 +80,10 @@ function Contacts() {
 
   const editHandler = (id) => {
     const newEdit = contacts.find((contact) => contact.id === id);
+    if (newEdit) {
     setContact(newEdit);
     setIsEditing(true);
+    }
   };
 
   const updateHandler = () => {
