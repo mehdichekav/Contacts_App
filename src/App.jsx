@@ -1,13 +1,15 @@
-import Contacts from "./components/Contacts"
-import Layout from "./layout/Layout"
+import Contacts from "./components/Contacts";
+import Layout from "./layout/Layout";
+import ContactProvider from "./components/ContactProvider";
 
 function App() {
-
   return (
-    <Layout>
-      <Contacts />
-    </Layout>
-  )
+    <ContactProvider>
+      <Layout>
+        <Contacts />
+      </Layout>
+    </ContactProvider>
+  );
 }
 
-export default App
+export default App;

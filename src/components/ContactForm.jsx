@@ -1,4 +1,8 @@
-import styles from "./Contacts.module.css";
+
+import { useContext } from "react";
+import { ContactContext } from "./ContactProvider";
+import styles from "./ContactForm.module.css";
+
 
 function ContactForm({
   inputs,
@@ -10,36 +14,63 @@ function ContactForm({
   selectedContacts,
   confirmBulkDelete,
 }) {
+  const { alert, alertType } = useContext(ContactContext);
+
   return (
     <div className={styles.formContainer}>
-      <div className={styles.form}>
-        {inputs.map((input, index) => (
-          <input
-            key={index}
-            type={input.type}
-            placeholder={input.placeholder}
-            name={input.name}
-            value={contact[input.name]}
-            onChange={changeHandler}
-          />
+      <h2>{isEditing ? "✏️ Edit Contact" : "➕ Add New Contact"}</h2>
+
+      <form
+        className={styles.form}
+        onSubmit={(e) => {
+          e.preventDefault();
+          isEditing ? updateHandler() : addHandler();
+        }}
+      >
+        {inputs.map((input) => (
+          <div key={input.name} className={styles.inputGroup}>
+            <label htmlFor={input.name}>{input.label}</label>
+            <input
+              id={input.name}
+              name={input.name}
+              type={input.type}
+              placeholder={input.placeholder}
+              value={contact[input.name] || ""}
+              onChange={changeHandler}
+            />
+          </div>
         ))}
 
-        {isEditing ? (
-          <button onClick={updateHandler}>Update Contact</button>
-        ) : (
-          <button onClick={addHandler}>Add Contact</button>
-        )}
-      </div>
+        <div className={styles.buttons}>
+          <button type="submit" className={styles.submitBtn}>
+            {isEditing ? "💾 Update Contact" : "➕ Add Contact"}
+          </button>
 
-      <button
-        className={`${styles.deleted} ${
-          selectedContacts.length > 0 ? styles.show : styles.hidden
-        }`}
-        onClick={confirmBulkDelete}
-        disabled={selectedContacts.length === 0}
-      >
-        Delete Selected ({selectedContacts.length})
-      </button>
+          {selectedContacts.length > 0 && (
+            <button
+              type="button"
+              onClick={confirmBulkDelete}
+              className={`${styles.deleteBtn}`}
+            >
+              🗑️ Delete Selected ({selectedContacts.length})
+            </button>
+          )}
+        </div>
+      </form>
+
+      {alert && (
+        <div
+          className={`${styles.alert} ${
+            alertType === "success"
+              ? styles.success
+              : alertType === "error"
+              ? styles.error
+              : ""
+          }`}
+        >
+          {alert}
+        </div>
+      )}
     </div>
   );
 }
