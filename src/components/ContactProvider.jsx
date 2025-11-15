@@ -1,17 +1,12 @@
-// src/components/ContactProvider.jsx
 import { createContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 export const ContactContext = createContext();
 
-function ContactProvider({ children }) {
-  // 🟩 لیست مخاطبین از localStorage
-  const [contacts, setContacts] = useState(() => {
-    const saved = localStorage.getItem("contacts");
-    return saved ? JSON.parse(saved) : [];
-  });
+const BASE_URL = "http://localhost:5000/contacts";
 
-  // 🟩 فرم مخاطب
+function ContactProvider({ children }) {
+  const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({
     id: "",
     name: "",
@@ -20,17 +15,26 @@ function ContactProvider({ children }) {
     phone: "",
   });
 
-  // 🟩 وضعیت‌های کمکی
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState("");
   const [alertType, setAlertType] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  // 🟩 ذخیره در localStorage
+
   useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
+    axios
+      .get(BASE_URL)
+      .then((res) => {
+        setContacts(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        showAlert("Failed to load contacts!", "error");
+        setLoading(false);
+      });
+  }, []);
 
-  // 🟩 پیام هشدار
+
   const showAlert = (msg, type) => {
     setAlert(msg);
     setAlertType(type);
@@ -40,26 +44,36 @@ function ContactProvider({ children }) {
     }, 2000);
   };
 
-  // 🟩 افزودن مخاطب
-  const addContact = () => {
+
+  const addContact = async () => {
     if (!contact.name || !contact.lastName || !contact.email || !contact.phone) {
-      showAlert("Please Enter Valid Data!", "error");
+      showAlert("Please enter valid data!", "error");
       return;
     }
 
-    const newContact = { ...contact, id: uuidv4() };
-    setContacts((prev) => [...prev, newContact]);
-    resetForm();
-    showAlert("Contact added successfully!", "success");
+    try {
+      const res = await axios.post(BASE_URL, contact);
+
+      setContacts((prev) => [...prev, res.data]);
+      resetForm();
+      showAlert("Contact added successfully!", "success");
+    } catch (error) {
+      showAlert("Failed to add contact!", "error");
+    }
   };
 
-  // 🟩 حذف مخاطب
-  const deleteContact = (id) => {
-    setContacts((prev) => prev.filter((c) => c.id !== id));
-    showAlert("Contact deleted!", "success");
+
+  const deleteContact = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}/${id}`);
+      setContacts((prev) => prev.filter((c) => c.id !== id));
+      showAlert("Contact deleted!", "success");
+    } catch {
+      showAlert("Failed to delete!", "error");
+    }
   };
 
-  // 🟩 ویرایش (پر کردن فرم)
+
   const editContact = (id) => {
     const editable = contacts.find((c) => c.id === id);
     if (editable) {
@@ -68,17 +82,24 @@ function ContactProvider({ children }) {
     }
   };
 
-  // 🟩 بروزرسانی مخاطب
-  const updateContact = () => {
-    setContacts((prev) =>
-      prev.map((c) => (c.id === contact.id ? contact : c))
-    );
-    resetForm();
-    setIsEditing(false);
-    showAlert("Contact updated successfully!", "success");
+
+  const updateContact = async () => {
+    try {
+      await axios.put(`${BASE_URL}/${contact.id}`, contact);
+
+      setContacts((prev) =>
+        prev.map((c) => (c.id === contact.id ? contact : c))
+      );
+
+      resetForm();
+      setIsEditing(false);
+      showAlert("Contact updated!", "success");
+    } catch {
+      showAlert("Failed to update contact!", "error");
+    }
   };
 
-  // 🟩 پاک کردن فرم
+
   const resetForm = () => {
     setContact({
       id: "",
@@ -102,6 +123,7 @@ function ContactProvider({ children }) {
         updateContact,
         alert,
         alertType,
+        loading,
       }}
     >
       {children}

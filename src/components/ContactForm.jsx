@@ -1,8 +1,6 @@
-
 import { useContext } from "react";
 import { ContactContext } from "./ContactProvider";
 import styles from "./ContactForm.module.css";
-
 
 function ContactForm({
   inputs,
