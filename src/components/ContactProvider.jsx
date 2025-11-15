@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
 
 export const ContactContext = createContext();
 
-const BASE_URL = "http://localhost:5000/contacts";
-
 function ContactProvider({ children }) {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    const saved = localStorage.getItem("contacts");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [contact, setContact] = useState({
     id: "",
     name: "",
@@ -18,22 +19,11 @@ function ContactProvider({ children }) {
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState("");
   const [alertType, setAlertType] = useState("");
-  const [loading, setLoading] = useState(true);
 
-
+  // ذخیره خودکار در localStorage
   useEffect(() => {
-    axios
-      .get(BASE_URL)
-      .then((res) => {
-        setContacts(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        showAlert("Failed to load contacts!", "error");
-        setLoading(false);
-      });
-  }, []);
-
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
   const showAlert = (msg, type) => {
     setAlert(msg);
@@ -44,35 +34,27 @@ function ContactProvider({ children }) {
     }, 2000);
   };
 
-
-  const addContact = async () => {
+  const addContact = () => {
     if (!contact.name || !contact.lastName || !contact.email || !contact.phone) {
       showAlert("Please enter valid data!", "error");
       return;
     }
 
-    try {
-      const res = await axios.post(BASE_URL, contact);
+    const newContact = {
+      ...contact,
+      id: Date.now(), // ساخت ID یکتا
+    };
 
-      setContacts((prev) => [...prev, res.data]);
-      resetForm();
-      showAlert("Contact added successfully!", "success");
-    } catch (error) {
-      showAlert("Failed to add contact!", "error");
-    }
+    setContacts((prev) => [...prev, newContact]);
+
+    resetForm();
+    showAlert("Contact added successfully!", "success");
   };
 
-
-  const deleteContact = async (id) => {
-    try {
-      await axios.delete(`${BASE_URL}/${id}`);
-      setContacts((prev) => prev.filter((c) => c.id !== id));
-      showAlert("Contact deleted!", "success");
-    } catch {
-      showAlert("Failed to delete!", "error");
-    }
+  const deleteContact = (id) => {
+    setContacts((prev) => prev.filter((c) => c.id !== id));
+    showAlert("Contact deleted!", "success");
   };
-
 
   const editContact = (id) => {
     const editable = contacts.find((c) => c.id === id);
@@ -82,23 +64,15 @@ function ContactProvider({ children }) {
     }
   };
 
+  const updateContact = () => {
+    setContacts((prev) =>
+      prev.map((c) => (c.id === contact.id ? contact : c))
+    );
 
-  const updateContact = async () => {
-    try {
-      await axios.put(`${BASE_URL}/${contact.id}`, contact);
-
-      setContacts((prev) =>
-        prev.map((c) => (c.id === contact.id ? contact : c))
-      );
-
-      resetForm();
-      setIsEditing(false);
-      showAlert("Contact updated!", "success");
-    } catch {
-      showAlert("Failed to update contact!", "error");
-    }
+    resetForm();
+    setIsEditing(false);
+    showAlert("Contact updated!", "success");
   };
-
 
   const resetForm = () => {
     setContact({
@@ -123,7 +97,6 @@ function ContactProvider({ children }) {
         updateContact,
         alert,
         alertType,
-        loading,
       }}
     >
       {children}
