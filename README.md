@@ -1,16 +1,137 @@
-# React + Vite
+🧩 معرفی پروژه
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Context App یک اپلیکیشن مدیریت مخاطبین (Contact Manager) است که در بوت‌کمپ بوتواستارت و طی هفته‌های ۱۴ تا ۱۸ توسعه داده شده.
 
-Currently, two official plugins are available:
+این اپلیکیشن بر پایه React + Context API ساخته شده تا مشکل prop drilling کاملاً حذف شود و معماری قابل مقیاس‌پذیری فراهم شود.
+تمامی عملیات‌ها در یک صفحهٔ اصلی واحد (Single Screen) انجام می‌شوند تا تجربه کاربری ساده، سریع و شبیه اپلیکیشن‌های واقعی باشد.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+داده‌ها از طریق JSON Server مدیریت می‌شوند و این باعث می‌شود پروژه رفتار شبیه یک اپ واقعی با backend واقعی داشته باشد.
 
-## React Compiler
+✨ ویژگی‌ها (Features)
+🔹 عملکردهای اصلی
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+➕ افزودن مخاطب
 
-## Expanding the ESLint configuration
+✏️ ویرایش اطلاعات مخاطب
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🗑 حذف تکی با مودال تأیید
+
+🗂 حذف گروهی (Bulk Delete) با Checkbox
+
+🔍 جستجو بر اساس:
+
+نام
+
+نام خانوادگی
+
+ایمیل
+
+🔹 ویژگی‌های تکنیکال
+
+استفاده از Context API برای مدیریت global state
+
+مدیریت stateهای داخلی با useState
+
+عملیات CRUD کامل روی JSON Server
+
+ساختار کامپوننتی تمیز و قابل نگه‌داری
+
+کامپوننت‌های تفکیک‌شده مثل:
+
+فرم افزودن/ویرایش
+
+لیست مخاطبین
+
+کارت مخاطب
+
+Search Bar
+
+Modal حذف
+
+Bulk Delete
+
+🔹 طراحی و UX
+
+رابط کاربری کلاسیک و ساده
+
+اجرای تمام عملیات‌ها در یک صفحه
+
+استفاده از CSS خالص برای کنترل کامل روی ظاهر
+
+نمایش مودال هنگام حذف برای جلوگیری از خطا
+
+🧱 ساختار پروژه (Project Structure)
+
+پروژه با ساختار ماژولار و قابل توسعه ساخته شده:
+
+components/ → شامل تمام کامپوننت‌های UI
+
+context/ → مدیریت جهانی state با Context Provider
+
+services/ → توابع ارتباط با JSON Server
+
+styles/ → مدیریت فایل‌های CSS
+
+assets/ → آیکون‌ها یا تصاویر (درصورت وجود)
+
+🛠 تکنولوژی‌ها و ابزارها (Tech Stack)
+
+React.js
+
+Context API
+
+useState
+
+JSON Server
+
+Fetch API / Axios
+
+CSS ساده
+
+🚀 نحوه اجرای پروژه (How to Run)
+
+برای اجرای این پروژه نیاز است:
+
+پروژه React راه‌اندازی شود
+
+JSON Server اجرا شود
+
+این توضیحات فقط روند را بیان می‌کنند و شامل دستورات ترمینال نیست.
+
+🧠 تصمیمات معماری (Architecture Decisions)
+
+به‌جای prop drilling، از Context API برای مدیریت State استفاده شده تا کد تمیز و قابل گسترش باشد.
+
+از useReducer استفاده نشده (به دلیل محدودیت زمانی)، اما ساختار پروژه طوری طراحی شده که اضافه کردن آن در آینده راحت باشد.
+
+JSON Server انتخاب شد تا اپلیکیشن CRUD واقعی‌تر و نزدیک‌تر به پروژه‌های Full-stack باشد.
+
+همهٔ فعالیت‌ها در یک صفحه انجام می‌شود تا سرعت و ساده‌گی اپلیکیشن حفظ شود.
+
+بخش Bulk Delete و Modal به‌صورت کامپوننت‌های جدا پیاده‌سازی شدند تا قابلیت استفاده مجدد و مدیریت ساده‌تر داشته باشند.
+
+🧭 بهبودهای آینده (Future Improvements)
+
+افزودن Pagination
+
+استفاده از Tailwind یا Styled Components
+
+افزودن دسته‌بندی مخاطبین
+
+استفاده از useReducer برای ایجاد معماری Flux
+
+اضافه کردن Unit Tests
+
+اضافه کردن Loader / Empty State
+
+فیلترهای پیشرفته‌تر
+
+👤 اطلاعات Bootcamp و نویسنده
+
+نام پروژه: Context App
+
+بوت‌کمپ: بوتواستارت – دوره تیر
+
+هفته: ۱۸
+
+تکنولوژی‌های یادگرفته‌شده: React, Context API, JSON Server
