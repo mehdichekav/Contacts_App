@@ -1,7 +1,7 @@
 import { useContext, useState, useMemo } from "react";
 import { ContactContext } from "./ContactProvider";
 
-import { contactSchema } from "../validations/validationSchema";
+import { contactSchema } from "../contacts/validationSchema";
 
 
 import inputs from "../contacts/inputs";
