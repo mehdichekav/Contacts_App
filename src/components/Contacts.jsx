@@ -1,6 +1,9 @@
 import { useContext, useState, useMemo } from "react";
 import { ContactContext } from "./ContactProvider";
 
+import { contactSchema } from "../validations/validationSchema";
+
+
 import inputs from "../contacts/inputs";
 import ContactsList from "./ContactsList";
 import styles from "./Contacts.module.css";
@@ -88,13 +91,13 @@ function Contacts() {
 
       <ContactForm
         inputs={inputs}
-        contact={contact}
-        changeHandler={changeHandler}
         isEditing={isEditing}
         addHandler={addContact}
         updateHandler={updateContact}
         selectedContacts={selectedContacts}
         confirmBulkDelete={confirmBulkDelete}
+        defaultValues={contact}
+        validationSchema={contactSchema}
       />
 
       {showModal && (
